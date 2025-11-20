@@ -15,50 +15,40 @@ import goalRoutes from "./routes/goal.routes.js";
 import walletRoutes from "./routes/wallet.routes.js";
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-import path from "path";
-import { fileURLToPath } from "url";
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-/* ---------------- AZURE HEALTH CHECK FIX ---------------- */
-
-// Endpoint raíz para Azure Health Check
+// --- Endpoints de salud para Azure ---
 app.get("/", (req, res) => {
   res.status(200).send("API OK");
 });
 
-// Ruta health-check estándar
 app.get("/health", (req, res) => {
   res.status(200).send("Healthy");
 });
 
-// Compatibilidad con health check heredado de Azure
 app.get("/home", (req, res) => {
   res.status(200).send("Home OK");
 });
 
-// Compatibilidad con hostingstart
 app.get("/hostingstart.html", (req, res) => {
   res.status(200).send("OK");
 });
+// --------------------------------------
 
-/* ---------------------------------------------------------- */
-
+// Middlewares
 app.use(cors());
 app.use(express.json());
 
-// Documentación Swagger
+// Swagger
 app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Rutas
+// Rutas de la API
 app.use("/api/auth", authRoutes);
 app.use("/api/prefs", prefsRoutes);
 app.use("/api/expenses", expensesRoutes);
 app.use("/api/goal", goalRoutes);
 app.use("/api/wallet", walletRoutes);
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`✅ API escuchando en http://localhost:${PORT}`);
-  console.log(`📚 Swagger UI en http://localhost:${PORT}/api/docs`);
-});
+// 🔚 IMPORTANTE: aquí **NO** hacemos app.listen
+// Solo exportamos la app para que server.js la use
+
+export default app;
