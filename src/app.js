@@ -18,6 +18,11 @@ import walletRoutes from "./routes/wallet.routes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+app.get("/", (req, res) => {
+  res.send("API TimeMoney está funcionando ✔");
+});
+
+
 app.use(cors());
 app.use(express.json());
 
