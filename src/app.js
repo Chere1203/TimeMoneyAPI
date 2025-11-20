@@ -5,7 +5,6 @@ dotenv.config();
 
 console.log("🔍 DEBUG: SUPABASE_DB_URL =", process.env.SUPABASE_DB_URL);
 
-
 import swaggerUi from "swagger-ui-express";
 import { swaggerSpec } from "./config/swagger.config.js";
 
@@ -21,6 +20,8 @@ const PORT = process.env.PORT || 3000;
 import path from "path";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+/* ---------------- AZURE HEALTH CHECK FIX ---------------- */
 
 // Endpoint raíz para Azure Health Check
 app.get("/", (req, res) => {
@@ -42,9 +43,7 @@ app.get("/hostingstart.html", (req, res) => {
   res.status(200).send("OK");
 });
 
-
-
-
+/* ---------------------------------------------------------- */
 
 app.use(cors());
 app.use(express.json());
@@ -59,12 +58,7 @@ app.use("/api/expenses", expensesRoutes);
 app.use("/api/goal", goalRoutes);
 app.use("/api/wallet", walletRoutes);
 
-// Ping básico
-app.get("/", (req, res) => {
-  res.json({ message: "Time is Money API", docs: "/api/docs" });
-});
-
-app.listen(PORT,"0.0.0.0", () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`✅ API escuchando en http://localhost:${PORT}`);
   console.log(`📚 Swagger UI en http://localhost:${PORT}/api/docs`);
 });
