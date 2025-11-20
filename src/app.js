@@ -22,13 +22,26 @@ import path from "path";
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-app.get("/hostingstart.html", (req, res) => {
-  res.send("OK");
+// Endpoint raíz para Azure Health Check
+app.get("/", (req, res) => {
+  res.status(200).send("API OK");
 });
 
-app.get("/", (req, res) => {
-  res.send("API TimeMoney funcionando ✔");
+// Ruta health-check estándar
+app.get("/health", (req, res) => {
+  res.status(200).send("Healthy");
 });
+
+// Compatibilidad con health check heredado de Azure
+app.get("/home", (req, res) => {
+  res.status(200).send("Home OK");
+});
+
+// Compatibilidad con hostingstart
+app.get("/hostingstart.html", (req, res) => {
+  res.status(200).send("OK");
+});
+
 
 
 
