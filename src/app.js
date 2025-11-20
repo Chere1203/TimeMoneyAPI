@@ -26,6 +26,11 @@ app.get("/hostingstart.html", (req, res) => {
   res.send("OK");
 });
 
+app.get("/", (req, res) => {
+  res.send("API TimeMoney funcionando ✔");
+});
+
+
 
 
 app.use(cors());
@@ -46,7 +51,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Time is Money API", docs: "/api/docs" });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT,"0.0.0.0", () => {
   console.log(`✅ API escuchando en http://localhost:${PORT}`);
   console.log(`📚 Swagger UI en http://localhost:${PORT}/api/docs`);
 });
